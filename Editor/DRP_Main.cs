@@ -44,10 +44,8 @@ namespace Thry
         static bool disposing = false;
 
         static float lastUpdate = 0;
-        const float UPDATE_RATE = 3;
 
         static float last_callback = 0;
-        const float CALLBACK_RATE = 1.0f;
 
         static DRP_Main()
         {
@@ -96,29 +94,17 @@ namespace Thry
             }
             else
             {
-                if(Time.realtimeSinceStartup - lastUpdate > UPDATE_RATE)
+                if(Time.realtimeSinceStartup - lastUpdate > DRP_Settings.GetData().update_rate)
                 {
                     UpdateActivity();
                     lastUpdate = Time.realtimeSinceStartup;
                 }
-                if (Time.realtimeSinceStartup - last_callback > CALLBACK_RATE)
+                if (Time.realtimeSinceStartup - last_callback > DRP_Settings.GetData().update_rate/3)
                 {
                     last_callback = Time.realtimeSinceStartup;
                     discord.RunCallbacks();
                 }
             }
-        }
-
-        private static readonly DateTime UnixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-
-        public static long GetCurrentUnixTimestampMillis()
-        {
-            return (long)(DateTime.UtcNow - UnixEpoch).TotalMilliseconds;
-        }
-
-        public static long GetUnityStartUpTimeStamp()
-        {
-            return GetCurrentUnixTimestampMillis() - (long)EditorApplication.timeSinceStartup*1000;
         }
 
         private static void UpdateActivity()
@@ -140,7 +126,7 @@ namespace Thry
                 Details = scene,
                 Timestamps =
             {
-                Start = GetUnityStartUpTimeStamp(),
+                Start = Helper.GetUnityStartUpTimeStamp(),
             },
                 Assets =
             {

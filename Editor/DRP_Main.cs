@@ -84,6 +84,7 @@ namespace Thry
             ModuleHandler.RegisterPreModuleRemoveFunction(delegate ()
             {
                 EditorApplication.update -= Update;
+                discord.Dispose();
             });
         }
 

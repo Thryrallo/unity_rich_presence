@@ -80,6 +80,11 @@ namespace Thry
             UpdateActivity();
 
             EditorApplication.update += Update;
+
+            ModuleHandler.RegisterPreModuleRemoveFunction(delegate ()
+            {
+                EditorApplication.update -= Update;
+            });
         }
 
         static void Update()

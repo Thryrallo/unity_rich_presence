@@ -84,7 +84,6 @@ namespace Thry
             ModuleHandler.RegisterPreModuleRemoveFunction(delegate ()
             {
                 EditorApplication.update -= Update;
-                Helper.UnloadModule("discord_game_sdk.dll");
                 discord.Dispose();
             });
         }

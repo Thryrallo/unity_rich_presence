@@ -1,15 +1,30 @@
 {
-"name":"Discord Rich Presence",
-"version":0.2,
-"description":"Enables Discord rich presence for unity",
-"classname":"Thry.DRP_Settings",
-"settings_file_name":"DRP_Settings",
-"requirements":[],
-"files":["Editor/DRP_Main.cs","Editor/DRP_Settings.cs","discord_sdk/lib/x86/discord_game_sdk.dll",
-"discord_sdk/lib/x86/discord_game_sdk.dll.meta","discord_sdk/lib/x86/discord_game_sdk.dll.lib",
-"discord_sdk/lib/x86_64/discord_game_sdk.bundle","discord_sdk/lib/x86_64/discord_game_sdk.dll",
-"discord_sdk/lib/x86_64/discord_game_sdk.dll.meta","discord_sdk/lib/x86_64/discord_game_sdk.dll.lib",
-"discord_sdk/lib/x86_64/discord_game_sdk.dylib","discord_sdk/csharp/ActivityManager.cs",
-"discord_sdk/csharp/Constants.cs","discord_sdk/csharp/Core.cs","discord_sdk/csharp/ImageManager.cs",
-"discord_sdk/csharp/LobbyManager.cs","discord_sdk/csharp/StorageManager.cs","discord_sdk/csharp/StoreManager.cs"]
+  "name": "Discord Rich Presence",
+  "version": 0.3,
+  "description": "Enables Discord rich presence for unity",
+  "classname": "Thry.DRP_Settings",
+  "settings_file_name": "DRP_Settings",
+  "requirement": {
+    "type": "EDITOR_VERSION",
+    "data": ">0.18"
+  },
+  "files": [
+    "Editor/DRP_Main.cs",
+    "Editor/DRP_Settings.cs",
+    "discord_sdk/lib/x86/discord_game_sdk.dll",
+    "discord_sdk/lib/x86/discord_game_sdk.dll.meta",
+    "discord_sdk/lib/x86/discord_game_sdk.dll.lib",
+    "discord_sdk/lib/x86_64/discord_game_sdk.bundle",
+    "discord_sdk/lib/x86_64/discord_game_sdk.dll",
+    "discord_sdk/lib/x86_64/discord_game_sdk.dll.meta",
+    "discord_sdk/lib/x86_64/discord_game_sdk.dll.lib",
+    "discord_sdk/lib/x86_64/discord_game_sdk.dylib",
+    "discord_sdk/csharp/ActivityManager.cs",
+    "discord_sdk/csharp/Constants.cs",
+    "discord_sdk/csharp/Core.cs",
+    "discord_sdk/csharp/ImageManager.cs",
+    "discord_sdk/csharp/LobbyManager.cs",
+    "discord_sdk/csharp/StorageManager.cs",
+    "discord_sdk/csharp/StoreManager.cs"
+  ]
 }

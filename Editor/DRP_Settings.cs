@@ -40,7 +40,7 @@ namespace Thry
         {
             string stringData = Helper.LoadValueFromFile("drp", ModuleSettings.MODULES_CONFIG);
             if (stringData != null)
-                data = Parsers.ParseToObject<DRP_Data>(stringData);
+                data = Parser.ParseToObject<DRP_Data>(stringData);
             else
                 data = new DRP_Data();
             ValuesInit = true;

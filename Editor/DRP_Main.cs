@@ -49,7 +49,7 @@ namespace Thry
 
         static DRP_Main()
         {
-            last_updated_file_name = Helper.ReadFileIntoString(DRP_LAST_UPDATED_FILE_PATH);
+            last_updated_file_name = FileHelper.ReadFileIntoString(DRP_LAST_UPDATED_FILE_PATH);
             clientID = Environment.GetEnvironmentVariable("DISCORD_CLIENT_ID");
             if (clientID == null)
             {

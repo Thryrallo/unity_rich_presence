@@ -33,12 +33,12 @@ namespace Thry
             GUILayout.Label(((int)(data.update_rate*10))/10.0+" seconds", GUILayout.ExpandWidth(false));
             GUILayout.EndHorizontal();
             if (EditorGUI.EndChangeCheck())
-                Helper.SaveValueToFile("drp", data.ToString(), ModuleSettings.MODULES_CONFIG);
+                FileHelper.SaveValueToFile("drp", data.ToString(), ModuleSettings.MODULES_CONFIG);
         }
         
         private static void InitValues()
         {
-            string stringData = Helper.LoadValueFromFile("drp", ModuleSettings.MODULES_CONFIG);
+            string stringData = FileHelper.LoadValueFromFile("drp", ModuleSettings.MODULES_CONFIG);
             if (stringData != null)
                 data = Parser.ParseToObject<DRP_Data>(stringData);
             else

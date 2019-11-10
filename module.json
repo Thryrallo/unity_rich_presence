@@ -6,7 +6,7 @@
   "settings_file_name": "DRP_Settings",
   "requirement": {
     "type": "EDITOR_VERSION",
-    "data": ">0.18"
+    "data": ">=1.0"
   },
   "files": [
     "Editor/DRP_Main.cs",

@@ -34,7 +34,7 @@ namespace Thry
     [InitializeOnLoad]
     public class DRP_Main
     {
-        public const string DRP_LAST_UPDATED_FILE_PATH = ".thry_drp_last_updated_file";
+        public const string DRP_LAST_UPDATED_FILE_PATH = "Thry/thry_drp_last_updated_file";
 
         public static Discord.Discord discord;
         static string clientID;

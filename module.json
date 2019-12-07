@@ -1,6 +1,6 @@
 {
   "name": "Discord Rich Presence",
-  "version": 0.4,
+  "version": 0.5,
   "description": "Enables Discord rich presence for unity",
   "classname": "Thry.DRP_Settings",
   "settings_file_name": "DRP_Settings",

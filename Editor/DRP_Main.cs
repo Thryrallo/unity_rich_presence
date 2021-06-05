@@ -47,6 +47,8 @@ namespace Thry
 
         static float last_callback = 0;
 
+        static bool isRunning = false;
+
         static DRP_Main()
         {
             last_updated_file_name = FileHelper.ReadFileIntoString(DRP_LAST_UPDATED_FILE_PATH);
@@ -55,16 +57,61 @@ namespace Thry
             {
                 clientID = "619838876994764800";
             }
-            discord = new Discord.Discord(Int64.Parse(clientID), (UInt64)Discord.CreateFlags.Default);
+
+            if(InitDiscord())
+            {
+                EditorApplication.update += Update;
+            }
+            else
+            {
+                EditorApplication.update += TryInitDiscord;
+            }
+
+            ModuleHandler.RegisterPreModuleRemoveFunction(delegate ()
+            {   
+                if(isRunning) EditorApplication.update -= Update;
+                else EditorApplication.update -= TryInitDiscord;
+                discord.Dispose();
+            });
+        }
+
+        static float lastTry = 0;
+        static void TryInitDiscord()
+        {
+            if(Time.realtimeSinceStartup - lastTry < 5)
+            {
+                return;
+            }
+            lastTry = Time.realtimeSinceStartup;
+            if (InitDiscord())
+            {
+                EditorApplication.update += Update;
+                EditorApplication.update -= TryInitDiscord;
+            }
+        }
+
+        static bool InitDiscord()
+        {
+            try
+            {
+                discord = new Discord.Discord(Int64.Parse(clientID), (UInt64)Discord.CreateFlags.NoRequireDiscord);
+            }catch(Exception e)
+            {
+                if(e.GetType() == typeof(Discord.ResultException))
+                {
+                    return false;
+                }
+                return false;
+            }
             discord.SetLogHook(Discord.LogLevel.Debug, (level, message) =>
             {
-                Debug.Log("Log["+ level+"] "+message);
+                Debug.Log("Log[" + level + "] " + message);
             });
 
             var applicationManager = discord.GetApplicationManager();
             applicationManager.GetOAuth2Token((Discord.Result result, ref Discord.OAuth2Token oauth2Token) =>
             {
-                Debug.Log("Access Token "+ oauth2Token.AccessToken);
+                Debug.Log("Access Token " + oauth2Token.AccessToken);
             });
 
             var userManager = discord.GetUserManager();
@@ -73,19 +120,14 @@ namespace Thry
             {
                 Debug.Log("----------------------------Discord Rich Presence---------------------------");
                 var currentUser = userManager.GetCurrentUser();
-                Debug.Log("Username: \"" + currentUser.Username+ "\", Id: \"" + currentUser.Id+"\"");
+                Debug.Log("Username: \"" + currentUser.Username + "\", Id: \"" + currentUser.Id + "\"");
                 Debug.Log("-------------------------------------------------------------------------------");
             };
 
             UpdateActivity();
+            isRunning = true;
 
-            EditorApplication.update += Update;
-
-            ModuleHandler.RegisterPreModuleRemoveFunction(delegate ()
-            {
-                EditorApplication.update -= Update;
-                discord.Dispose();
-            });
+            return true;
         }
 
         static void Update()
@@ -100,15 +142,35 @@ namespace Thry
             }
             else
             {
+                if (isRunning == false) return;
                 if(Time.realtimeSinceStartup - lastUpdate > DRP_Settings.GetData().update_rate)
                 {
-                    UpdateActivity();
+                    try
+                    {
+                        UpdateActivity();
+                    }catch(Exception e)
+                    {
+                        //throws if discords is not running, too lazy to something else
+                        isRunning = false;
+                        EditorApplication.update -= Update;
+                        EditorApplication.update += TryInitDiscord;
+                    }
                     lastUpdate = Time.realtimeSinceStartup;
                 }
-                if (Time.realtimeSinceStartup - last_callback > DRP_Settings.GetData().update_rate/3)
+                if (Time.realtimeSinceStartup - last_callback > DRP_Settings.GetData().update_rate / 3)
                 {
                     last_callback = Time.realtimeSinceStartup;
-                    discord.RunCallbacks();
+                    try
+                    {
+                        discord.RunCallbacks();
+                    }
+                    catch (Exception e)
+                    {
+                        //throws if discords is not running, too lazy to something else
+                        isRunning = false;
+                        EditorApplication.update -= Update;
+                        EditorApplication.update += TryInitDiscord;
+                    }
                 }
             }
         }

@@ -111,7 +111,8 @@ namespace Thry
             var applicationManager = discord.GetApplicationManager();
             applicationManager.GetOAuth2Token((Discord.Result result, ref Discord.OAuth2Token oauth2Token) =>
             {
-                Debug.Log("Access Token " + oauth2Token.AccessToken);
+                Debug.Log("Access Token Acquired");
+                //Debug.Log("Access Token " + oauth2Token.AccessToken);
             });
 
             var userManager = discord.GetUserManager();
@@ -120,7 +121,8 @@ namespace Thry
             {
                 Debug.Log("----------------------------Discord Rich Presence---------------------------");
                 var currentUser = userManager.GetCurrentUser();
-                Debug.Log("Username: \"" + currentUser.Username + "\", Id: \"" + currentUser.Id + "\"");
+                Debug.Log("Username: \"" + currentUser.Username + "\"");
+                //Debug.Log("Username: \"" + currentUser.Username + "\", Id: \"" + currentUser.Id + "\"");
                 Debug.Log("-------------------------------------------------------------------------------");
             };
 
